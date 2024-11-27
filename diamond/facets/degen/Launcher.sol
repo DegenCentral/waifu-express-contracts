@@ -31,8 +31,6 @@ interface IUniswapV3Factory {
 
 contract Launcher is Diamondable {
 
-	address internal constant weth = 0x4598A6c05910ab914F0CbAAca1911Cd337d10D29;
-
 	IUniswapV3Factory internal constant factory = IUniswapV3Factory(0x8A2578d23d4C532cC9A98FaD91C0523f5efDE652);
 	address internal constant nfpManager = 0xEE5FF5Bc5F852764b5584d92A4d592A53DC527da;
 	uint24 internal constant fee = 3000;
@@ -40,11 +38,12 @@ contract Launcher is Diamondable {
 
 	IUniswapV3Pool internal pool;
 
-	function launcher_launch(
+	function launch(
 		address token,
 		uint256 amountToken,
 		uint256 amountWeth
 	) external onlyDiamond payable returns (address, uint256) {
+		address weth = INonfungiblePositionManager(nfpManager).WETH9();
 		(address token0, address token1) = weth < token
 			? (weth, token)
 			: (token, weth);
@@ -106,6 +105,7 @@ contract Launcher is Diamondable {
 
 		uint256 amount = uint256(amount0Delta > 0 ? amount0Delta : amount1Delta);
 
+		address weth = INonfungiblePositionManager(nfpManager).WETH9();
 		IwETH(weth).deposit{value: amount}();
 		Token(weth).transfer(address(pool), amount);
 	}

@@ -15,7 +15,7 @@ contract UniV3Vault is IERC721Receiver {
 	address public creator;
 	uint256 public nfp;
 
-	Token internal weth = Token(0x4598A6c05910ab914F0CbAAca1911Cd337d10D29);
+	Token internal weth;
 	Token internal token;
 
 	constructor(address _protocol, address _creator, address _token, address _nfpm) {
@@ -23,6 +23,7 @@ contract UniV3Vault is IERC721Receiver {
 		creator = _creator;
 		token = Token(_token);
 		nfpm = INonfungiblePositionManager(_nfpm);
+		weth = Token(nfpm.WETH9());
 	}
 
 	event FeesCollected(address receiver, uint256 amountWeth, uint256 amountToken);
