@@ -16,10 +16,10 @@ contract FlareUsdFeed is IAggregatorV3 {
 		override
 		returns (uint256 price, uint64 timestamp)
 	{
-		(uint256 _feedValue, , uint64 _timestamp) = ContractRegistry.getFtsoV2().getFeedById(
+		(uint256 _feedValue, uint64 _timestamp) = ContractRegistry.getFtsoV2().getFeedByIdInWei(
 			0x01464c522f55534400000000000000000000000000 // usd
 		);
-		// convert from 7 to 8 decimals
-		return (_feedValue * 10, _timestamp);
+		// convert from 18 to 8 decimals
+		return (_feedValue / 1e10, _timestamp);
 	}
 }
