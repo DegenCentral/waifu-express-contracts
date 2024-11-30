@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNKNOWN
-pragma solidity ^0.8.18;
+pragma solidity 0.8.18;
 
 interface INonfungiblePositionManager {
 	function WETH9() external view returns (address);

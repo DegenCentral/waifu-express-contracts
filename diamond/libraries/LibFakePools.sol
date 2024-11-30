@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNKNOWN
-pragma solidity ^0.8.18;
+pragma solidity 0.8.18;
 
 library LibFakePools {
 	bytes32 constant STORAGE_POSITION = keccak256("diamond.fakepools.storage");

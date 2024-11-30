@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: UNKNOWN
-pragma solidity ^0.8.18;
+pragma solidity 0.8.18;
 
 import { IAggregatorV3 } from "../interfaces/IAggregatorV3.sol";
 import { ChainlinkOracle } from "../structs/ChainlinkOracle.sol";
 
 library LibUsd {
 
-	function ethToUsd(uint256 usdcEthPrice, uint256 amountEth) internal pure returns (uint256) {
-		uint256 ethAmount = amountEth;
-		return ((ethAmount * usdcEthPrice) / (10**(8+18)) / (10**18));
+	function ethToUsd(uint256 usdEthPrice, uint256 ethAmount) internal pure returns (uint256) {
+		return (ethAmount * usdEthPrice) / (10 ** 18);
 	}
 
-	function usdToEth(uint256 usdcEthPrice, uint256 usdAmount) internal pure returns (uint256) {
-		return ((10**18 * (10**8)) / usdcEthPrice) * usdAmount;
+	function usdToEth(uint256 usdEthPrice, uint256 usdAmount) internal pure returns (uint256) {
+		return (usdAmount * (10 ** 18)) / usdEthPrice;
 	}
 
 	function getOraclePrice(ChainlinkOracle storage oracle) internal returns (uint256) {

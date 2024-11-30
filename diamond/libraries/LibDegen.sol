@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNKNOWN
-pragma solidity ^0.8.18;
+pragma solidity 0.8.18;
 
 import { LibUtils } from "./LibUtils.sol";
 import { LibDiamond } from "./LibDiamond.sol";
@@ -11,7 +11,7 @@ library LibDegen {
 	struct Storage {
 		uint256 proceeds;
 
-		uint32 creationPrice;
+		uint256 creationPrice;
 
 		uint16 txFee;
 		uint16 launchFee;
@@ -21,7 +21,7 @@ library LibDegen {
 		ChainlinkOracle usdOracle;
 
 		uint256 fakePoolBaseEther;
-		uint32 fakePoolMCapThreshold;
+		uint256 fakePoolMCapThreshold;
 	}
 
 	function store() internal pure returns (Storage storage s) {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNKNOWN
-pragma solidity ^0.8.18;
+pragma solidity 0.8.18;
 
 import { IRouter } from "./diamond/interfaces/IRouter.sol";
 import { IwETH } from "./diamond/interfaces/IwETH.sol";
@@ -89,6 +89,7 @@ contract UniV3Router is IRouter {
 	}
 
 	function swapTokensForEth(address token, uint256 amountIn, uint256 amountOutMin) external override {
+		Token(token).transferFrom(msg.sender, address(this), amountIn);
 		Token(token).approve(address(router), amountIn);
 
 		router.exactInputSingle(IUniV3Router.ExactInputSingleParams({

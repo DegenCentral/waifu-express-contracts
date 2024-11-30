@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNKNOWN
-pragma solidity ^0.8.18;
+pragma solidity 0.8.18;
 
 import { DiamondInit } from "./DiamondInit.sol";
 import { LibDegen } from "../libraries/LibDegen.sol";
@@ -10,7 +10,7 @@ contract DegenInit is DiamondInit {
 
 		LibDegen.Storage storage s = LibDegen.store();
 
-		s.creationPrice = 1; // usd
+		s.creationPrice = 1 ether; // usd
 
 		s.txFee = 10;
 		s.launchFee = 20;
@@ -18,7 +18,7 @@ contract DegenInit is DiamondInit {
 		s.tokenSupply = 1_000_000_000 ether;
 
 		// FAKE POOL
-		s.fakePoolMCapThreshold = 75_000; // usd
-		s.fakePoolBaseEther = 1.56 ether;
+		s.fakePoolMCapThreshold = 75_000 ether; // usd
+		s.fakePoolBaseEther = 226829 ether;
 	}
 }

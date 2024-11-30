@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNKNOWN
-pragma solidity ^0.8.18;
+pragma solidity 0.8.18;
 
 import { LibDiamond } from "../../libraries/LibDiamond.sol";
 import { LibDegen } from "../../libraries/LibDegen.sol";
@@ -48,13 +48,12 @@ contract FakePools is Diamondable {
 	function checkMarketCapThreshold(LibFakePools.FakePool storage pool) internal {
 		LibDegen.Storage storage d = LibDegen.store();
 
-	 	uint256 p = price(pool, 1 ether, true);
-		uint256 ethMcap = d.tokenSupply * p;
+		uint256 ethPrice = price(pool, 1 ether, true);
+	 	uint256 usdEthPrice = LibUsd.getOraclePrice(d.usdOracle);
+		uint256 usdPrice = LibUsd.ethToUsd(usdEthPrice, ethPrice);
+		uint256 usdMcap = (d.tokenSupply * usdPrice) / (10 ** 18);
 
-		uint256 usdEthPrice = LibUsd.getOraclePrice(d.usdOracle);
-		uint256 amountUsd = LibUsd.ethToUsd(usdEthPrice, ethMcap);
-
-		if (amountUsd >= d.fakePoolMCapThreshold) {
+		if (usdMcap >= d.fakePoolMCapThreshold) {
 			pool.locked = true;
 			emit FakePoolMCapReached(pool.token);
 		}
